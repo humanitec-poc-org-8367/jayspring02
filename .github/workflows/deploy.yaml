@@ -65,6 +65,12 @@ jobs:
           containers:
             frontend:
               image: $ECR/$IMAGE:$TAG
+              variables:
+                MYSQL_HOST: \${resources.db.host}
+                MYSQL_PORT: \${resources.db.port}
+                MYSQL_NAME: \${resources.db.name}
+                MYSQL_USER: \${resources.db.username}
+                MYSQL_PASS: \${resources.db.password}
           EOF
 
           ./score-humanitec delta --env development --overrides ./humanitec.score.yaml --app jayspring02 --org="${{ secrets.HUMANITEC_ORG_ID }}" --token "${{ secrets.HUMANITEC_TOKEN }}" --deploy
